@@ -1,22 +1,29 @@
 import load_token
 import discord
+from discord.ext import commands
+
+client = commands.Bot(command_prefix="$")
 
 
-class Client(discord.Client):
-    async def on_ready(self):
-        print("Logged on as {0}!".format(self.user))
+def log_messages(message):
+    # log messages
+    print('Message from {0.author}: {0.content}'.format(message))
 
-    async def on_message(self, message):
-        print('Message from {0.author}: {0.content}'.format(message))
 
-        if message.author == self.user:
-            return
-        if message.content == "ping":
-            await message.channel.send("pong")
+@client.event
+async def on_ready():
+    print("Smite bot is now running...")
+
+
+@client.event
+async def on_message(message):
+    log_messages(message)
+
+    if message.author == client.user:
+        return
 
 
 def main():
-    client = Client()
     client.run(load_token.get_token())
 
 
