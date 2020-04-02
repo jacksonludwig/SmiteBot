@@ -8,5 +8,4 @@ def get_token():
 
 
 def log_messages(message):
-    # log messages
     print('Message from {0.author}: {0.content}'.format(message))

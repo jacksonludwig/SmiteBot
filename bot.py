@@ -1,4 +1,5 @@
 import utils
+import scrape_data
 import discord
 from discord.ext import commands
 
@@ -11,8 +12,8 @@ async def on_ready():
 
 
 @client.command()
-async def test(context):
-    await context.send("test reply")
+async def scrape(context, god_name, game_mode):
+    await context.send(scrape_data.get_page_info(god_name, game_mode))
 
 
 @client.event
