@@ -1,11 +1,5 @@
-import json
+import load_token
 import discord
-
-
-def get_token():
-    with open("token.json") as file:
-        data = json.load(file)
-        return data["token"]
 
 
 class Client(discord.Client):
@@ -23,7 +17,7 @@ class Client(discord.Client):
 
 def main():
     client = Client()
-    client.run(get_token())
+    client.run(load_token.get_token())
 
 
 main()
