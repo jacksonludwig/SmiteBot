@@ -15,9 +15,9 @@ def log_messages(message):
     print('Message from {0.author}: {0.content}'.format(message))
 
 
-def make_pro_embed_start(data, CONST_START_SEPEARATOR):
+def make_pro_embed_start(god_name, data, CONST_START_SEPEARATOR):
     embed = discord.Embed(
-        title="Starting build",
+        title="{}: Starting build".format(god_name),
         color=discord.Color.blue()
     )
     global sep_index
@@ -26,19 +26,31 @@ def make_pro_embed_start(data, CONST_START_SEPEARATOR):
             sep_index = i
             break
         embed.add_field(name="{}.)".format(
-            i), value=data[i], inline=False)
+            i), value=data[i])
 
     return embed
 
 
-def make_pro_embed_end(data):
+def make_pro_embed_end(god_name, data):
     embed = discord.Embed(
-        title="Ending build",
-        color=discord.Color.blue()
+        title="{}: Ending build".format(god_name),
+        color=discord.Color.red()
     )
     global sep_index
     for i in range(sep_index + 1, len(data)):
         embed.add_field(name="{}.)".format(
-            i - sep_index), value=data[i], inline=False)
+            i - sep_index), value=data[i])
+
+    return embed
+
+
+def make_generic_embed(god_name, data):
+    embed = discord.Embed(
+        title="{}: Build".format(god_name),
+        color=discord.Color.green()
+    )
+    for i in range(len(data)):
+        embed.add_field(name="{}.)".format(
+            i + 1), value=data[i])
 
     return embed

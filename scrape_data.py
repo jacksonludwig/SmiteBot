@@ -87,6 +87,11 @@ def find_prop_builds_end(soup):
 
 def find_generic_build(soup):
     items = []
+    build_div = soup.findAll("div", attrs={"class": "item primary-item__img"})
+    for item in build_div:
+        items.append(item.find("img")["alt"])
+
+    return items
 
 
 def get_results(god_name, game_mode):
