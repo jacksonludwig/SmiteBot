@@ -50,16 +50,6 @@ def get_page_info(god_name, game_mode):
     return BeautifulSoup(requests.get(URL).content, "html.parser")
 
 
-'''
-def find_pro_builds(soup):
-    items = []
-    results = soup.find("div", class_="pro-build")
-    for img in results.findAll("img", alt=True):
-        items.append(img["alt"])
-    return items
-'''
-
-
 def find_pro_builds_start(soup):
     items = []
     build_div = soup.find("div", attrs={"class": "pro-build"})
@@ -77,6 +67,24 @@ def find_pro_builds_start(soup):
     return items
 
 
+def find_prop_builds_end(soup):
+    items = []
+    build_div = soup.find("div", attrs={"class": "pro-build"})
+    is_ending_build = False
+
+    for item in build_div:
+        if isinstance(item, NavigableString):
+            continue
+        if item.text == "Final Build":
+            is_ending_build = True
+        if is_ending_build == True and item.get("class") == None:
+            data = item.findAll("img")
+            for image in data:
+                items.append(image["alt"])
+
+    return items
+
+
 def find_generic_build(soup):
     items = []
 
@@ -87,7 +95,10 @@ def get_results(god_name, game_mode):
     soup = get_page_info(god_name, game_num)
 
     if game_num == CONST_RANKED_CONQUEST_VAL or game_num == CONST_UNRANKED_CONQUEST_VAL:
-        build_list = find_pro_builds_start(soup)
+        build_list_start = find_pro_builds_start(soup)
+        build_list_end = find_prop_builds_end(soup)
+        build_list = ["PRO"] + build_list_start + \
+            ["SEPARATOR"] + build_list_end
     else:
         build_list = find_generic_build(soup)
 
