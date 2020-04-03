@@ -14,8 +14,7 @@ CONST_UNRANKED_CLASH_VAL = 466
 
 
 def parse_info(data):
-    name = data.strip()
-    return name.replace(" ", "-").lower()
+    return data.strip().replace(" ", "-").lower()
 
 
 def parse_game_mode(game_mode):
@@ -44,12 +43,11 @@ def parse_game_mode(game_mode):
 
 def get_page_info(god_name, game_mode):
     URL = "https://smite.guru/builds/{}?queue={}".format(
-        parse_info(god_name), str(parse_game_mode(game_mode)))
+        parse_info(god_name), game_mode)
+
     print("The URL about to be scraped is: {}".format(URL))
 
-    page = requests.get(URL)
-
-    return BeautifulSoup(page.content, "html.parser")
+    return BeautifulSoup(requests.get(URL).content, "html.parser")
 
 
 '''
@@ -63,8 +61,18 @@ def find_pro_builds(soup):
 
 
 def find_pro_builds_start(soup):
-    results = soup.find("div", attrs={"class": "pro-build"})
     items = []
+    build_div = soup.find("div", attrs={"class": "pro-build"})
+
+    for item in build_div:
+        if isinstance(item, NavigableString):
+            continue
+        if item.text == "Final Build":
+            break
+        if item.get("class") == None:
+            data = item.findAll("img")
+            for image in data:
+                items.append(image["alt"])
 
     return items
 
@@ -75,9 +83,9 @@ def find_generic_build(soup):
 
 def get_results(god_name, game_mode):
     build_list = []
-    soup = get_page_info(god_name, game_mode)
-
     game_num = parse_game_mode(game_mode)
+    soup = get_page_info(god_name, game_num)
+
     if game_num == CONST_RANKED_CONQUEST_VAL or game_num == CONST_UNRANKED_CONQUEST_VAL:
         build_list = find_pro_builds_start(soup)
     else:
