@@ -44,13 +44,33 @@ def parse_game_mode(game_mode):
 def get_page_info(god_name, game_mode):
     URL = "https://smite.guru/builds/{}?queue={}".format(
         parse_info(god_name), str(parse_game_mode(game_mode)))
-    print(URL)
+    print("The URL about to be scraped is: {}".format(URL))
+
     page = requests.get(URL)
 
-    soup = BeautifulSoup(page.content, "html.parser")
+    return BeautifulSoup(page.content, "html.parser")
 
+
+def find_pro_builds(soup):
+    items = []
     results = soup.find("div", class_="pro-build")
     for img in results.findAll("img", alt=True):
-        print(img["alt"])
+        items.append(img["alt"])
+    return items
 
-    return "sent"
+
+def find_generic_build(soup):
+    items = []
+
+
+def get_results(god_name, game_mode):
+    build_list = []
+    soup = get_page_info(god_name, game_mode)
+
+    game_num = parse_game_mode(game_mode)
+    if game_num == CONST_RANKED_CONQUEST_VAL or game_num == CONST_UNRANKED_CONQUEST_VAL:
+        build_list = find_pro_builds(soup)
+    else:
+        build_list = find_generic_build(soup)
+
+    return build_list

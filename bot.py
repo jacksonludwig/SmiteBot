@@ -13,7 +13,7 @@ async def on_ready():
 
 @client.command()
 async def scrape(context, god_name, game_mode):
-    await context.send(scrape_data.get_page_info(god_name, game_mode))
+    await context.send(scrape_data.get_results(god_name, game_mode))
 
 
 @client.event
