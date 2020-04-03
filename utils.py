@@ -15,6 +15,10 @@ def log_messages(message):
     print('Message from {0.author}: {0.content}'.format(message))
 
 
+def make_footer(embed, foot_text):
+    embed.set_footer(text=foot_text)
+
+
 def make_pro_embed_start(god_name, data, CONST_START_SEPEARATOR):
     embed = discord.Embed(
         title="{}: Starting build".format(god_name),
@@ -28,6 +32,7 @@ def make_pro_embed_start(god_name, data, CONST_START_SEPEARATOR):
         embed.add_field(name="{}.)".format(
             i), value=data[i])
 
+    make_footer(embed, "source: smite.guru")
     return embed
 
 
@@ -41,6 +46,7 @@ def make_pro_embed_end(god_name, data):
         embed.add_field(name="{}.)".format(
             i - sep_index), value=data[i])
 
+    make_footer(embed, "source: smite.guru")
     return embed
 
 
@@ -53,4 +59,5 @@ def make_generic_embed(god_name, data):
         embed.add_field(name="{}.)".format(
             i + 1), value=data[i])
 
+    make_footer(embed, "source: smite.guru")
     return embed

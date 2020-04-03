@@ -67,7 +67,7 @@ def find_pro_builds_start(soup):
     return items
 
 
-def find_prop_builds_end(soup):
+def find_pro_builds_end(soup):
     items = []
     build_div = soup.find("div", attrs={"class": "pro-build"})
     is_ending_build = False
@@ -101,7 +101,7 @@ def get_results(god_name, game_mode):
 
     if game_num == CONST_RANKED_CONQUEST_VAL or game_num == CONST_UNRANKED_CONQUEST_VAL:
         build_list_start = find_pro_builds_start(soup)
-        build_list_end = find_prop_builds_end(soup)
+        build_list_end = find_pro_builds_end(soup)
         build_list = ["PRO"] + build_list_start + \
             ["SEPARATOR"] + build_list_end
     else:
