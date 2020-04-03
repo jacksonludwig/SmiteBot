@@ -61,3 +61,14 @@ def make_generic_embed(god_name, data):
 
     make_footer(embed, "source: smite.guru")
     return embed
+
+
+def make_info_embed():
+    embed = discord.Embed(
+        title="Smite Build Bot",
+        color=discord.Color.green()
+    )
+    embed.add_field(
+        name="Use", value="Type a hash and build (#build) followed by a god name and \
+        then a game mode, e.g. \n\"#build loki conquest\"")
+    return embed

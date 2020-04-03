@@ -6,7 +6,8 @@ from discord.ext import commands
 CONST_PRO_MARKER = "PRO"
 CONST_START_SEPEARATOR = "SEPARATOR"
 
-client = commands.Bot(command_prefix="$")
+client = commands.Bot(command_prefix="#")
+client.remove_command("help")
 
 
 @client.event
@@ -26,6 +27,11 @@ async def build(context, god_name, game_mode):
     else:
         embed = utils.make_generic_embed(god_name.upper(), data)
         await context.send(embed=embed)
+
+
+@client.command()
+async def help(context):
+    await context.send(embed=utils.make_info_embed())
 
 
 @client.event
