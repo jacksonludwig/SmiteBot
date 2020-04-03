@@ -17,6 +17,7 @@ async def on_ready():
 
 @client.command()
 async def build(context, god_name, game_mode):
+    await context.send("scraping...")
     data = scrape_data.get_results(god_name, game_mode)
     if data[0] == CONST_PRO_MARKER:
         embed1 = utils.make_pro_embed_start(
