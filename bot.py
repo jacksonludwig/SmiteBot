@@ -17,17 +17,21 @@ async def on_ready():
 
 @client.command()
 async def build(context, god_name, game_mode):
-    await context.send("scraping...")
-    data = scrape_data.get_results(god_name, game_mode)
-    if data[0] == CONST_PRO_MARKER:
-        embed1 = utils.make_pro_embed_start(
-            god_name.upper(), data, CONST_START_SEPEARATOR)
-        embed2 = utils.make_pro_embed_end(god_name.upper(), data)
-        await context.send(embed=embed1)
-        await context.send(embed=embed2)
-    else:
-        embed = utils.make_generic_embed(god_name.upper(), data)
-        await context.send(embed=embed)
+    try:
+        await context.send("scraping...")
+        data = scrape_data.get_results(god_name, game_mode)
+
+        if data[0] == CONST_PRO_MARKER:
+            embed1 = utils.make_pro_embed_start(
+                god_name.upper(), data, CONST_START_SEPEARATOR)
+            embed2 = utils.make_pro_embed_end(god_name.upper(), data)
+            await context.send(embed=embed1)
+            await context.send(embed=embed2)
+        else:
+            embed = utils.make_generic_embed(god_name.upper(), data)
+            await context.send(embed=embed)
+    except:
+        await context.send("scraping failed (check god name)")
 
 
 @client.command()
