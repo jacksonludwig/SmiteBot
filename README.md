@@ -11,4 +11,4 @@ This is a python discord bot which gets an updated smite build for you.
 
 Type #build followed by the godname, and optionally the game mode, e.g. <b>#build loki joust</b> or <b>#build tyr</b>.
 
-God Names with spaces in between must be written as one argument, e.g. <b>"nu wa"</b> or <b>nu-wa</b> for Nu Wa. Case is irrelevant. 
+God Names with spaces in between must be written as one argument, e.g. <b>#build "nu wa"</b> or <b>#build nu-wa</b> for Nu Wa. Case is irrelevant. 
