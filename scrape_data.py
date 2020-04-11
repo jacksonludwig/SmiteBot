@@ -59,7 +59,7 @@ def find_pro_builds_start(soup):
             continue
         if item.text == "Final Build":
             break
-        if item.get("class") == None:
+        if item.get("class") is None:
             data = item.findAll("img")
             for image in data:
                 items.append(image["alt"])
@@ -77,7 +77,7 @@ def find_pro_builds_end(soup):
             continue
         if item.text == "Final Build":
             is_ending_build = True
-        if is_ending_build == True and item.get("class") == None:
+        if is_ending_build and item.get("class") is None:
             data = item.findAll("img")
             for image in data:
                 items.append(image["alt"])
